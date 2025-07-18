@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 6 Pillars of CCaaS Voice Delivery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Slate & Sky -->
+    <!-- Application Structure Plan: The infographic uses a hub-and-spoke model, implemented as a responsive grid of interactive cards. This design was chosen to provide a high-level overview of all six pillars at once, allowing users to immediately grasp the entire framework. Clicking on a pillar reveals a modal window with detailed information. This interaction pattern is superior to a long, scrolling document because it allows for focused, "deep-dive" exploration into a specific topic without losing the context of the overall structure. The user can choose their own learning path, making the experience more engaging and effective. -->
+    <!-- Visualization & Content Choices: 1. Core Framework -> Grid of Cards -> Goal: Organize/Inform. Interaction: Click to reveal modal. Justification: Provides a clean, scannable overview and invites exploration. 2. Pillar Icons -> Styled Divs/Unicode -> Goal: Visual Cue. Interaction: None. Justification: Creates visual distinction for each pillar without using SVG/images, adhering to constraints. 3. Pillar Details -> Modal Window -> Goal: Inform/Organize. Interaction: Open/Close. Justification: Presents detailed information in a focused, uncluttered view, preventing information overload on the main screen. 4. Component Mapping -> Bulleted List within Modal -> Goal: Inform. Interaction: None. Justification: Clearly lists and categorizes the technical components associated with each pillar. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .pillar-card { transition: all 0.3s ease; border: 1px solid #e2e8f0; }
+        .pillar-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); border-color: #38bdf8; }
+        .modal-backdrop { transition: opacity 0.3s ease; }
+        .modal-content { transition: all 0.3s ease; }
+        .modal-content ul { list-style-type: disc; padding-left: 1.5rem; }
+        .modal-content li { margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <div class="container mx-auto p-4 sm:p-8">
+        
+        <header class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">The Six Pillars of CCaaS Voice Delivery</h1>
+            <p class="text-lg text-slate-600 mt-4 max-w-3xl mx-auto">An architectural framework for designing, implementing, and troubleshooting modern cloud contact center solutions.</p>
+        </header>
+
+        <!-- Pillars Grid -->
+        <main id="pillars-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Pillar cards will be dynamically inserted here by JavaScript -->
+        </main>
+
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="pillar-modal" class="fixed inset-0 bg-slate-900 bg-opacity-50 flex items-center justify-center p-4 z-50 hidden modal-backdrop">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto modal-content">
+            <div class="sticky top-0 bg-white p-6 border-b border-slate-200 flex justify-between items-center">
+                <h2 id="modal-title" class="text-2xl font-bold text-sky-600"></h2>
+                <button id="modal-close-btn" class="text-slate-400 hover:text-slate-800 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div id="modal-body" class="p-6">
+                <!-- Modal content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pillarsData = [
+                {
+                    id: 'edge',
+                    title: '1. Edge Voice Service',
+                    icon: '🌐',
+                    summary: 'The globally distributed gateway that connects your platform to the outside world, ensuring security and low-latency.',
+                    content: `
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">What it is:</h3>
+                        <p class="text-slate-600 mb-4">This is the globally distributed network of servers that sit at the "edge" of the cloud platform, physically close to users and carriers around the world. This layer includes critical components like <strong>Session Border Controllers (SBCs)</strong> and <strong>Media Servers</strong>.</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Its Role in CCaaS Delivery:</h3>
+                        <ul class="text-slate-600 mb-4">
+                            <li><strong>The Gateway to the World:</strong> It is the primary termination point for all external voice traffic, connecting via CPaaS providers (e.g., Twilio), direct carrier partnerships, and customer BYOC.</li>
+                            <li><strong>Security & Interoperability:</strong> The SBCs at the edge act as the first line of defense, providing security and handling SIP interoperability.</li>
+                            <li><strong>Low-Latency Media:</strong> Media (RTP) is anchored at the closest edge location to the user, managed by Geo-DNS, to ensure high quality.</li>
+                        </ul>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Your Director's Focus:</h3>
+                        <p class="text-slate-600 mb-4">Your strategy must involve meticulous <strong>capacity planning</strong> for these edge locations. You will lead the teams that design the architecture for new edge deployments and manage the technical relationships with both CPaaS vendors and direct carrier partners.</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Mapped Components:</h3>
+                        <ul class="text-slate-600">
+                            <li>Sprinklr's & Customer's SBCs (e.g., Ribbon, Cisco CUBE)</li>
+                            <li>CPaaS Providers (e.g., Twilio) & BYOC Carriers (e.g., AT&T)</li>
+                            <li>Cloud VPC Firewalls & Customer Firewalls</li>
+                            <li>AWS Direct Connect / Azure ExpressRoute</li>
+                            <li>Geo-DNS Service (e.g., AWS Route 53)</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: 'sip',
+                    title: '2. SIP (Signaling)',
+                    icon: '💬',
+                    summary: 'The "air traffic control" system that sets up, modifies, and tears down calls with the traditional phone network.',
+                    content: `
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">What it is:</h3>
+                        <p class="text-slate-600 mb-4">SIP (Session Initiation Protocol) is a text-based protocol that handles all the control messages required to manage a call with the traditional telephone network (PSTN).</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Its Role in CCaaS Delivery:</h3>
+                        <ul class="text-slate-600 mb-4">
+                            <li><strong>PSTN Gateway:</strong> It's the primary way your platform communicates with the outside world of phone numbers via the Edge Voice Service.</li>
+                            <li><strong>Context & Control:</strong> It carries critical information like caller ID and SDP, and manages all in-call events like transfers (REFER) and hangups (BYE).</li>
+                        </ul>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Your Director's Focus:</h3>
+                        <p class="text-slate-600 mb-4">Your primary concern is <strong>interoperability and security</strong>. Your team's biggest challenge will be ensuring legacy systems can communicate with your edge SBCs. All SIP signaling must be encrypted using <strong>TLS</strong>.</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Mapped Components:</h3>
+                        <ul class="text-slate-600">
+                            <li>SIP Proxy / Server (in Sprinklr Core)</li>
+                            <li>Customer's PBX (e.g., Cisco CUCM, Avaya Aura)</li>
+                            <li>Physical Desk Phones (e.g., Cisco, Poly)</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: 'rtp',
+                    title: '3. RTP (Media)',
+                    icon: '🔊',
+                    summary: 'The "cargo plane" that carries the actual voice audio, and the source of all key quality metrics.',
+                    content: `
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">What it is:</h3>
+                        <p class="text-slate-600 mb-4">RTP (Real-time Transport Protocol) is the protocol that carries the actual voice audio packets over the network. This is what the customer and agent actually hear.</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Its Role in CCaaS Delivery:</h3>
+                        <ul class="text-slate-600 mb-4">
+                            <li><strong>Audio Transport:</strong> Once a session is established by SIP, the RTP streams start flowing between endpoints.</li>
+                            <li><strong>Quality Metrics:</strong> RTP and its control protocol, RTCP, provide the raw data for all critical Quality of Service (QoS) metrics, such as <strong>packet loss, jitter, and latency</strong>.</li>
+                        </ul>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Your Director's Focus:</h3>
+                        <p class="text-slate-600 mb-4">Your focus is entirely on <strong>Quality of Service (QoS)</strong>. You need to lead the strategy for minimizing packet loss and jitter by working with customers on network configuration (DSCP markings) and ensuring your global edge architecture is robust. All RTP media must be encrypted using <strong>SRTP</strong>.</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Mapped Components:</h3>
+                        <ul class="text-slate-600">
+                            <li>Media Servers / RTP Relays (in Sprinklr Edge)</li>
+                            <li>Transcoding Resources (DSPs)</li>
+                            <li>All Endpoints (Desk Phones, WebRTC Softphones)</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: 'webrtc',
+                    title: '4. WebRTC (Browser)',
+                    icon: '�',
+                    summary: 'The modern, browser-native technology that acts as the agent\'s softphone, connecting them to the platform.',
+                    content: `
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">What it is:</h3>
+                        <p class="text-slate-600 mb-4">WebRTC (Web Real-Time Communication) is the technology that enables voice and video communication directly within a web browser, without needing any special software or plugins. It is the standard for any "softphone" that runs inside a web application like Sprinklr.</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Its Role in CCaaS Delivery:</h3>
+                        <ul class="text-slate-600 mb-4">
+                            <li><strong>The Agent's Endpoint:</strong> This is how your agents connect to the platform. Their media is sent directly to the nearest Edge Voice Service.</li>
+                            <li><strong>Signaling Abstraction:</strong> WebRTC uses its own signaling (over WebSockets) which your platform translates into SIP when needed.</li>
+                        </ul>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Your Director's Focus:</h3>
+                        <p class="text-slate-600 mb-4">Your focus is on <strong>reliability and ease of use</strong>. You must guide your team in troubleshooting both the agent's local network (firewalls, permissions) and the cloud infrastructure to ensure a stable connection.</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Mapped Components:</h3>
+                        <ul class="text-slate-600">
+                            <li>Agent's PC / Laptop & Web Browser</li>
+                            <li>WebRTC Gateway & STUN/TURN Servers (in Sprinklr Edge)</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: 'dialplan',
+                    title: '5. Dialplan (Logic)',
+                    icon: '🔀',
+                    summary: 'The "rulebook" or flowchart that controls call routing, IVR menus, and all business logic for the call.',
+                    content: `
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">What it is:</h3>
+                        <p class="text-slate-600 mb-4">The dialplan is the "rulebook" that tells the system what to do with a call at every step. It's the core logic that routes the call through the system after it has been received by the Edge Service.</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Its Role in CCaaS Delivery:</h3>
+                        <ul class="text-slate-600 mb-4">
+                            <li><strong>IVR & Call Routing:</strong> The dialplan defines the IVR menu and decides which agent queue to send the call to.</li>
+                            <li><strong>Business Logic:</strong> It handles time-of-day routing, holiday routing, and failover logic.</li>
+                            <li><strong>Data-Driven Routing:</strong> It can use data from the CRM lookup to make more intelligent routing decisions.</li>
+                        </ul>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Your Director's Focus:</h3>
+                        <p class="text-slate-600 mb-4">Your team owns the delivery of the customer's dialplan. Your strategy must be to create a <strong>standardized and repeatable methodology</strong> for gathering the customer's complex routing requirements and translating them into a clear, well-documented configuration.</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Mapped Components:</h3>
+                        <ul class="text-slate-600">
+                            <li>ACD Engine & IVR Application Server (in Sprinklr Core)</li>
+                            <li>Customer's CUCM/Avaya Dial Plan (for initial routing)</li>
+                        </ul>
+                    `
+                },
+                {
+                    id: 'data',
+                    title: '6. Data (Intelligence)',
+                    icon: '🧠',
+                    summary: 'The contextual information and AI layer that makes the platform smart, from CRM lookups to real-time transcription.',
+                    content: `
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">What it is:</h3>
+                        <p class="text-slate-600 mb-4">This refers to all the contextual information *about* the call that is not part of the call itself. In a modern CCaaS platform like Sprinklr, this is the most important layer.</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Its Role in CCaaS Delivery:</h3>
+                        <ul class="text-slate-600 mb-4">
+                            <li><strong>CRM Integration:</strong> Fetches customer context before the call is even answered.</li>
+                            <li><strong>AI & Analytics:</strong> Provides real-time transcription, sentiment analysis, and agent assistance.</li>
+                            <li><strong>Post-Call Reporting:</strong> Packages all call data for reporting and analysis.</li>
+                        </ul>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Your Director's Focus:</h3>
+                        <p class="text-slate-600 mb-4">Your strategy must ensure that the voice implementation seamlessly integrates with this data layer. This means working closely with the customer to configure CRM integrations and partnering with the internal Product team to improve the AI models.</p>
+                        <h3 class="text-lg font-semibold text-slate-800 mb-2">Mapped Components:</h3>
+                        <ul class="text-slate-600">
+                            <li>AI Engine (Speech-to-Text, NLU)</li>
+                            <li>CRM Connector / API Gateway</li>
+                            <li>Analytics Database (e.g., Amazon Redshift)</li>
+                        </ul>
+                    `
+                }
+            ];
+
+            const grid = document.getElementById('pillars-grid');
+            const modal = document.getElementById('pillar-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalBody = document.getElementById('modal-body');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            function openModal(pillar) {
+                modalTitle.textContent = pillar.title;
+                modalBody.innerHTML = pillar.content;
+                modal.classList.remove('hidden');
+            }
+
+            function closeModal() {
+                modal.classList.add('hidden');
+            }
+
+            pillarsData.forEach(pillar => {
+                const card = document.createElement('div');
+                card.className = 'pillar-card bg-white p-6 rounded-xl shadow-md cursor-pointer';
+                card.innerHTML = `
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl mr-4">${pillar.icon}</span>
+                        <h3 class="text-xl font-bold text-slate-800">${pillar.title}</h3>
+                    </div>
+                    <p class="text-slate-600 mb-4">${pillar.summary}</p>
+                    <button class="font-semibold text-sky-600 hover:text-sky-800">Learn More →</button>
+                `;
+                card.addEventListener('click', () => openModal(pillar));
+                grid.appendChild(card);
+            });
+
+            modalCloseBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+�
