@@ -18,9 +18,11 @@ View Source Code
 A detailed mapping of the AWS ecosystem to the 7-Pillar framework, serving as an architect's guide to building a production-ready CCaaS/CPaaS platform on the cloud.
 View the Interactive Infographic (Live Demo)
 View Source Code
+
 🎯 **Purpose**
 This project was undertaken as a personal development initiative with two primary goals:
 To distill years of hands-on experience in the telecom and cloud communications industry into a set of clear, reusable architectural frameworks.
 To create a valuable resource for other technical leaders, architects, and implementation specialists navigating the complexities of the CCaaS and CPaaS landscape.
+
 🚀** How to Use**
 Feel free to explore the interactive guides via the "Live Demo" links above. The source code for each is self-contained in a single HTML file and can be downloaded for personal use and learning.
